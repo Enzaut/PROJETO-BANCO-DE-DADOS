@@ -1,0 +1,43 @@
+use ecommerce;
+SHOW TABLES;
+
+-- QUANTIDADE DE CLIENTES CADASTRADOS
+select count(*) from cliente;
+
+-- QUANTIDADE DE PRODUTOS CADASTRADOS
+select count(*) from produto;
+
+            
+            -- RECUPERANDO PRODUTOS COM VALOR ACIMA DE 70 REAIS 
+            select count(*) from produto where valor>70;
+            -- 4 PRODUTOS ENCONTRADOS
+            
+            
+            -- QUANTIDADE DE PRODUTOS ACIMA DE 70
+            select count(*) from produto where valor > 70;
+            -- NOME DOS PRODUTOS COM PREÇO ACIMA DE 70
+            select Nome, categoria, valor from produto having valor > 70 order by valor;
+            
+      -- RELAÇÃO PRODUTO/FORNECEDOR COM CNPJ
+select idProduto, Nome,Razão_social, CNPJ from produto
+		inner join produto_fornecedor on idProduto=idFoProduto
+        inner join fornecedor f on idFornecedor = idFoFornecedor
+        order by nome;
+
+
+-- FORNECEDOR/PRODUTO COM VALOR
+select f.Razão_social, p.Nome, p.valor from fornecedor f
+		inner join produto_fornecedor pf on idFornecedor = idFoFornecedor
+        inner join produto p on idProduto = idFoProduto
+        order by f.Razão_social, p.Nome;
+
+-- PROCURA PRODUTOS COM MENOS DE 500 PECAS NO ESTOQUE 
+select p.Nome, pe.quantidade_estoque from produto p
+		inner join Produto_estoque pe on p.idProduto = pe.idEstoque
+        having pe.quantidade_estoque < 500
+        order by pe.quantidade_estoque;
+        
+        -- VALOR TOTAL DO ESTOQUE
+        select sum(round(p.valor*quantidade_estoque,2)) as Valor_estoque from produto p
+		inner join produto_estoque pe on p.idProduto=pe.idProduto
+        order by pe.quantidade_estoque;
