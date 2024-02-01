@@ -1,0 +1,110 @@
+-- Criando dados para o Ecommerce
+
+use ecommerce;
+
+show tables;
+
+desc Cliente;
+insert into Cliente(Nome, CPF,CEP, Rua, Cidade, Estado, Data_nascimento, Email, Telefone)
+	values( 'Ana Silva Oliveira', '123.456.789-00', '01234-567', 'Rua das Flores', 'São Paulo', 'SP', '1985-03-15', 'Ana.Silva@email.com','(11)98765-4321'),
+		  ('João Santos', '234.567.890-11','04567-890','Rua dos Passaros', 'Rio de Janeiro', 'RJ', '1983-07-22', 'joao.santos@email.com', '(21)87654-3210'),
+          ('Ana Pereira', '345.678.901-22', '02345-678', 'Rua das Arvores', 'Belo Horizonte', 'MG', '1982-11-10','Ana.pereira@email.com', '(31)76543-2109'),
+          ('Pedro Costa', '456.789.012-33', '05678-901','Rua das Pedras', 'Curitiba', 'PR', '1978-09-05', 'Pedro.costa@email.com', '(41)65432-1098'),
+          ('Fernanda Lima','567.890.123-44', '06789-012', 'Rua dos Coqueiros', 'Porto Alegre', 'RS', '1995-04-28', 'fernanda.lima@gmail.com', '(51)54321-0987'),
+          ('Rafael Mendes','678.901.234-55', '07890-123', 'Rua das Rosas','Brasilia', 'DF', '1989-12-18', 'Rafael.Mendes@gmail.com', '(61)4310-9876'),
+          ('Juliana Ferreira', '789.012.345-66', '08901-234', 'Rua das Margaridas', 'Salvador', 'BA', '1980-07-03', 'Juliana.ferreira@email.com', '(71)32109-8765');
+         
+         
+         desc cartão;
+insert into cartão(CVV, Numero_cartão, Nome_titular, data_validade)
+	values(123, 1234-5678-9012-3456, 'Ana Silva Oliveira', '2025-10-01'),
+		  (234, 2345-6789-0123-4567, 'João Santos', '2024-05-01'),
+          (345, 3456-7890-1234-5678, 'Ana Pereira', '2027-09-01'),
+          (456, 4567-8901-2345-6789, 'Pedro Costa', '2026-12-01'),
+          (567, 5678-9012-3456-7890, 'Fernanda Lima', '2023-08-01'),
+          (678, 6789-0123-4567-8901, 'Rafael Mendes', '2028-11-01'),
+          (789, 7890-1234-5678-9012, 'Juliana Ferreira', '2030-03-01');
+          
+	desc produto;
+          insert into produto(Nome,categoria, avaliação, descrição,valor)
+          values( 'SmartphoneXY', 'Eletronico',4.5,'Smartphone de última geração com tela OLED e câmera de alta resolução', 1999.9),
+          ('Camiseta Casual','Vestimenta', 4.2,'Camiseta de algodão confortável para uso diário.', 50),
+          ('Boneca de Pelúcia', 'Brinquedos',4.8, 'Boneca fofa de pelúcia para crianças brincarem.', 30),
+          ('Arroz Integral','Alimentos', 4.7,'Pacote de arroz integral rico em fibras.', 5.99),
+          ('Fone de Ouvido Bluetooth','Eletronico', 4.4, 'Fone de ouvido sem fio com tecnologia Bluetooth.', 129.90),
+          ('Calça jeans', 'Vestimenta', 4.9, 'Calça jeans ajustada ao corpo, ideal para ocasiões casuais', 89.90);
+          
+          
+          desc pagamento;
+          insert into pagamento(idCliente,idPedido,idCartão,Tipo_pagamento,limite)
+          values(1,1,1, null, 4000),
+          (2,2,2, null,6000),
+          (3,3,3, null, 3450),
+          (4,4,4, null, 3000),
+          (5,5,5, null, 6780),
+          (6,6,6, null, 1200),
+          (7,7,7, null, 1345);
+          
+          desc pedido;
+          insert into pedido(Status_pedido, data_pedido, local_compra, Descrição,frete)
+          values('Em processamento','2024-01-25', 'Site', 'Fone para celulares', 22),
+          ('Cancelado','2023-06-22','Site','Pagamento não realizado',14),
+          ('Em processamento','2023-05-15','Loja','Blusa cinza masculina',0),
+          ('Em processamento','2023-11-02','Site','Celular de nova geração', 42);
+          
+          
+          desc estoque;
+          insert into estoque(rua_estoque, estado_estoque, Email, Responsavel, quantidade)
+          values('Av. das Flores', 'São paulo', 'joao.silva@gmail.com', 'João Silva', 500),
+          ('Rua dos Passaros', 'Rio de Janeiro', 'maria.oliveira@gmail.com', 'Maria Oliveira', 700),
+          ('Rua das Arvores', 'Minas Gerais', 'pedro.santos@gmail.com', 'Pedro Santos', 600),
+          ('Rua das Pedras','Paraná', 'ana.costa@gmail.com','Ana Costa', 350);
+          
+          desc produto_estoque;
+          insert into Produto_estoque(idProduto, idEstoque, quantidade_estoque)
+          values(1,1,665),
+          (2,2,734),
+          (3,3,456),
+          (4,4,247);
+          
+          
+          desc fornecedor;
+          insert into fornecedor(Endereço,Razão_social,CNPJ,contato,Email)
+          values('Av.Comercial', 'Empresa ABC LTDA', '12345678901234', '98765-4321', 'empresa.abc@gmail.com'),
+          ('Rua Industrial', 'Distribuidora XYZ S/A', '23456789012345','87654-3210','Distribuidora.xyz@gmail.com'),
+          ('Travessa do comercio','Fornecedora de produtos LTDA', '34567890123456', '76543-2109', 'fornecedoraLTD@gmail.com'),
+          ('Rua dos Negocios', 'Importadora Global S/A', '45678901234567', '65432-1098', 'Importadora.glob@gmail.com');
+          
+          
+          desc vendedor;
+          insert into vendedor(Razão_social,Nome_fantasia,CNPJ,CPF,location,telefone)
+          values('Comércio de Eletrônicos LTDA','José da Silva','123456780001-90','123456789-00','São Paulo SP','(11)98765-4321'),
+          ('Moda Fashion Ltda','Ana Oliveira','234567890001-01', '234567890-11', 'Rio de Janeiro RJ', '(21)87654-3210'),
+          ('Brinquedos Felizes S.A', 'Carlos Santos','345678900001-12','345678901-22', 'Belo Horizonte MG', '(31)76543-2109'),
+          ('Alimentos Saudáveis Ltda','Maria Costa','456789010001-23','456789012-33','Curitiba PR','(41)65432-1098');
+          
+          
+          desc produto_pedido;
+          insert into produto_pedido(idPeProduto, idPePedido, quantidade_produto, protudo_status)
+          values(2,1,'543', 'Disponivel'),
+          (3,2,'0','Sem estoque'),
+          (4,3,'3567', 'Disponivel'),
+          (5,4,'129','Disponivel'),
+          (6,5,'0', 'Sem estoque');
+          
+          
+          desc produto_fornecedor;
+-- Produto Fornecedor:
+insert into produto_fornecedor (idFoFornecedor, idFoProduto) values
+				(1,1),
+				(1,2),
+				(2,3),
+				(2,4),
+				(2,5),
+				(3,6),
+				(3,7),
+				(3,8),
+				(4,9),
+				(4,10),
+				(4,11);
+
