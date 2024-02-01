@@ -1,0 +1,145 @@
+create database ecommerce;
+use ecommerce;
+
+create table Cliente(
+idCliente int auto_increment primary key,
+Nome varchar(50),
+CPF char(16) not Null,
+CEP char(10) not null,
+Rua varchar(30),
+Cidade varchar(30),
+estado varchar(30),
+Data_nascimento date,
+Email varchar(45),
+Telefone varchar(16),
+constraint unique_cpf_client unique (CPF),
+constraint unique_cep_client unique (CEP)
+);
+desc Cliente;
+
+
+create table Cartão(
+idCartão int auto_increment primary key,
+CVV char(3) not null,
+Numero_cartão int not null,
+Nome_titular varchar(45) not null,
+data_validade date not null
+);
+
+desc Cartão;
+
+
+create table produto(
+idProduto int auto_increment primary key,
+Nome varchar(45) not null,
+classificação bool default false,
+categoria enum('Eletronico','Vestimenta','Brinquedos','Alimentos','Moveis') not null, 
+avaliação float default 0,
+descrição varchar(255),
+valor float not null
+);
+
+desc produto;
+
+desc Pagamento;
+
+
+create table Pedido(
+idPedido int auto_increment primary key,
+idPedidoCliente int,
+Status_pedido enum('Cancelado','Em processamento') default 'Em processamento',
+data_pedido date,
+local_compra enum('Loja','Site'),
+Descrição varchar(255),
+frete float default 10
+);
+
+drop table Pedido;
+
+desc Pedido;
+create table Pagamento(
+idCliente int,
+idPedido int,
+idCartão int,
+Tipo_pagamento enum('Boleto','Cartão','Dois cartões'),
+limite float,
+primary key(idCliente, idPedido, idCartão)
+);
+
+
+
+create table Estoque(
+idEstoque int auto_increment primary key,
+rua_estoque varchar(45) not null,
+estado_estoque varchar(45) not null,
+Email varchar(45) not null,
+Responsavel varchar(45) not null,
+quantidade int default 0
+);
+desc Estoque;
+
+create table Produto_estoque(
+idProduto int,
+idEstoque int,
+quantidade_estoque int default 0,
+primary key(idProduto, idEstoque)
+);
+desc Produto_estoque;
+
+
+create table Fornecedor(
+idFornecedor int auto_increment primary key,
+Endereço varchar(45),
+Razão_social varchar(255) not null,
+CNPJ char(15) not null,
+contato char(11) not null,
+Email varchar(45),
+constraint unique_supplier unique (CNPJ)
+);
+
+desc Fornecedor;
+
+
+create table Vendedor(
+idVendedor int auto_increment primary key,
+Razão_social varchar(45) not null,
+Nome_fantasia varchar(45),
+CNPJ char(18) not null,
+CPF char(15) not null,
+location varchar(255),
+telefone char(19) not null,
+constraint unique_cnpj_seller unique (CNPJ),
+constraint unique_cpf_seller unique (CPF)
+);
+
+desc Vendedor;
+
+drop table produto_pedido;
+
+create table produto_pedido(
+idPeProduto int,
+idPePedido int,
+quantidade_produto int default 1,
+protudo_status enum('Disponivel','Sem estoque') default 'Disponivel',
+primary key (idPeProduto, idPePedido),
+constraint fk_produto_vendedor foreign key(idPeProduto) references produto(idProduto),
+constraint fk_produto_produto foreign key (idPePedido) references pedido(idPedido)
+);
+
+desc produto_pedido;
+
+
+
+create table produto_fornecedor(
+		idFoFornecedor int,
+        idFoProduto int,
+        primary key (idFoFornecedor, idFoProduto),
+        constraint fk_fornecedor_fornecedor foreign key (idFoFornecedor) references fornecedor(idFornecedor),
+        constraint fk_fornecedor_produto foreign key (idFoProduto) references produto(idProduto)
+);
+
+show tables;
+
+show databases;
+use information_schema;
+show tables;
