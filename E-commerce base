@@ -54,7 +54,6 @@ Descrição varchar(255),
 frete float default 10
 );
 
-drop table Pedido;
 
 desc Pedido;
 create table Pagamento(
@@ -114,7 +113,6 @@ constraint unique_cpf_seller unique (CPF)
 
 desc Vendedor;
 
-drop table produto_pedido;
 
 create table produto_pedido(
 idPeProduto int,
